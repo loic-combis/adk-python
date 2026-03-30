@@ -95,13 +95,14 @@ class VertexAiRagRetrieval(BaseRetrievalTool):
   ) -> Any:
     from ...dependencies.vertexai import rag
 
-    response = asyncio.to_thread(rag.retrieval_query(
-        text=args['query'],
+    response = await asyncio.to_thread(
+        rag.retrieval_query,
+        text=args["query"],
         rag_resources=self.vertex_rag_store.rag_resources,
         rag_corpora=self.vertex_rag_store.rag_corpora,
         similarity_top_k=self.vertex_rag_store.similarity_top_k,
         vector_distance_threshold=self.vertex_rag_store.vector_distance_threshold,
-    ))
+    )
 
     logging.debug('RAG raw response: %s', response)
 
